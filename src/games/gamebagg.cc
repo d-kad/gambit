@@ -213,7 +213,7 @@ GameBAGGRep::GameBAGGRep(std::shared_ptr<agg::BAGG> _baggPtr)
   for (int pl = 1; pl <= baggPtr->getNumPlayers(); pl++) {
     for (int j = 0; j < baggPtr->getNumTypes(pl - 1); j++, k++) {
       m_players.push_back(new GamePlayerRep(this, k, baggPtr->getNumActions(pl - 1, j)));
-      m_players[k]->m_label = lexical_cast<std::string>(k);
+      m_players[k - 1]->m_label = lexical_cast<std::string>(k);
       agent2baggPlayer[k] = pl;
       std::for_each(m_players.back()->m_strategies.begin(), m_players.back()->m_strategies.end(),
                     [st = 1](GameStrategyRep *s) mutable { s->SetLabel(std::to_string(st++)); });
@@ -237,7 +237,7 @@ Array<int> GameBAGGRep::NumStrategies() const
 {
   Array<int> ns;
   for (size_t pl = 1; pl <= NumPlayers(); pl++) {
-    ns.push_back(m_players[pl]->m_strategies.size());
+    ns.push_back(m_players[pl - 1]->m_strategies.size());
   }
   return ns;
 }
@@ -246,7 +246,7 @@ int GameBAGGRep::MixedProfileLength() const
 {
   int res = 0;
   for (size_t pl = 1; pl <= NumPlayers(); pl++) {
-    res += m_players[pl]->m_strategies.size();
+    res += m_players[pl - 1]->m_strategies.size();
   }
   return res;
 }

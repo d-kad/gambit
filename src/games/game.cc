@@ -200,6 +200,14 @@ size_t GamePlayerRep::NumSequences() const
 //                            class GameRep
 //========================================================================
 
+GamePlayer GameRep::GetPlayer(int pl) const
+{
+  if (pl <= 0 || pl > m_players.size()) {
+    throw std::out_of_range("Player index out of range");
+  }
+  return m_players[pl - 1];
+}
+
 Array<GamePlayer> GameRep::GetPlayers() const
 {
   Array<GamePlayer> ret(NumPlayers());

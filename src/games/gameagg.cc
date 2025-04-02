@@ -202,7 +202,7 @@ Array<int> GameAGGRep::NumStrategies() const
 {
   Array<int> ns;
   for (int pl = 1; pl <= aggPtr->getNumPlayers(); pl++) {
-    ns.push_back(m_players[pl]->NumStrategies());
+    ns.push_back(m_players[pl - 1]->NumStrategies());
   }
   return ns;
 }
@@ -210,11 +210,11 @@ Array<int> GameAGGRep::NumStrategies() const
 GameStrategy GameAGGRep::GetStrategy(int p_index) const
 {
   for (int pl = 1; pl <= aggPtr->getNumPlayers(); pl++) {
-    if (static_cast<int>(m_players[pl]->NumStrategies()) >= p_index) {
-      return m_players[pl]->GetStrategy(p_index);
+    if (static_cast<int>(m_players[pl-1]->NumStrategies()) >= p_index) {
+      return m_players[pl-1]->GetStrategy(p_index);
     }
     else {
-      p_index -= m_players[pl]->NumStrategies();
+      p_index -= m_players[pl - 1]->NumStrategies();
     }
   }
   throw IndexException();

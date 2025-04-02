@@ -97,7 +97,7 @@ Array<int> GameExplicitRep::NumStrategies() const
   const_cast<GameExplicitRep *>(this)->BuildComputedValues();
   Array<int> dim(m_players.size());
   for (size_t pl = 1; pl <= m_players.size(); pl++) {
-    dim[pl] = m_players[pl]->m_strategies.size();
+    dim[pl] = m_players[pl - 1]->m_strategies.size();
   }
   return dim;
 }
