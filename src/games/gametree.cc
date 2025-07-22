@@ -748,10 +748,7 @@ bool GameTreeRep::IsPerfectRecall() const
     std::cerr << "  (Cache is empty or game is trivial)\n";
   }
 
-  // Iterate through the map to print its contents.
-  // Assumes m_infosetParents uses raw pointers as keys/values now.
   for (const auto &[infoset_ptr, parent_actions_set] : m_infosetParents) {
-    // Print the information set identifier.
     std::cerr << "  - Infoset " << infoset_ptr->GetPlayer()->GetNumber() << "."
               << infoset_ptr->GetNumber() << " (Player '" << infoset_ptr->GetPlayer()->GetLabel()
               << "'):\n";
@@ -760,23 +757,18 @@ bool GameTreeRep::IsPerfectRecall() const
       std::cerr << "    - (No parent actions recorded)\n";
     }
 
-    // Print each recorded parent action for this infoset.
     for (const auto &action_ptr : parent_actions_set) {
       if (action_ptr) {
-        // If the action is not null, print its label and the infoset it belongs to.
         std::cerr << "    - Reached via Action '" << action_ptr->GetLabel() << "' (from Infoset "
                   << action_ptr->GetInfoset()->GetPlayer()->GetNumber() << "."
                   << action_ptr->GetInfoset()->GetNumber() << ")\n";
       }
       else {
-        // This case is for the root or for players who haven't acted yet on a path.
         std::cerr << "    - Reached via null action\n";
       }
     }
   }
-  std::cerr << "---------------------------\n";
-  // ====================================================================
-  //                 DEBUGGING PRINTS END HERE
+  std::cerr << "--------------------------\n";
   // ====================================================================
 
   if (GetRoot()->IsTerminal()) {
